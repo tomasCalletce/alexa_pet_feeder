@@ -4,9 +4,9 @@ function Getdevicedata(token,device){
     var request = require("request");
     var options = { 
       method: 'GET',
-      url: `https://api.sinric.pro/api/v1/devices/:${device}`,
+      url: `https://api.sinric.pro/api/v1/devices/${device}`,
       headers: 
-      {   'Authorization': `${token}`,
+      {   'Authorization': `Bearer <${token}>`,
           'Content-Type': 'application/x-www-form-urlencoded' 
       } 
     };
