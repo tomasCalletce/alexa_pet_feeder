@@ -1,25 +1,58 @@
-const { on } = require("events");
-const request = require("request");
-const Getdevicedata = require('./getdevicedata')
+const axios = require('axios');
+const { get } = require('request');
+
 const url = "https://api.sinric.pro/api/v1/auth";
 
-const options = { 
-  method: 'POST',
-  url: url,
-  headers: 
-  {   'x-sinric-api-key' : 'b4d269b2-299d-4bba-accf-9f0eb0e0f67f',
-      'Content-Type'  : 'application/x-www-form-urlencoded' 
-  },
-  form: 
-  {
-      client_id: "android-app"
-  } 
-};
+async function auth_AccessToken(){
 
-request(options,async function (error, response, body) {
-  if (error) throw new Error(error);
-  const obj = await JSON.parse(body);
+  const res = await axios({
+    method: 'POST',
+    url: url,
+    headers: 
+    {   'x-sinric-api-key' : 'b4d269b2-299d-4bba-accf-9f0eb0e0f67f',
+        'Content-Type'  : 'application/x-www-form-urlencoded' 
+    },
+    form: 
+    {
+        client_id: "android-app"
+    } 
+  });
 
-  console.log(obj.accessToken);
-  Getdevicedata(obj.accessToken,"62699e6bd0fd258c521bf3d5");
-});
+  return res.data.accessToken;
+
+}
+
+async function getData(){
+
+  const authToekn = await auth_AccessToken();
+  console.log(authToekn)
+
+  try {
+
+    const res = await axios({
+      method: 'GET',
+      url: 'https://api.sinric.pro/api/v1/devices/62699e6bd0fd258c521bf3d5',
+      headers: 
+      {   
+          'Authorization': `Bearer ${authToekn}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      form: 
+      {
+          client_id: "android-app"
+      } 
+    });
+
+    console.log(res)
+    
+  } catch (error) {
+
+    console.log(error)
+    
+  }
+
+}
+
+
+
+getData();

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^0.27.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sinricpro": "^2.5.1"
   }
 }

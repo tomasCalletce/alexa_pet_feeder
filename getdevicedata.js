@@ -1,7 +1,7 @@
 const request = require("request");
 
 function Getdevicedata(token,device){
-    var request = require("request");
+
     var options = { 
       method: 'GET',
       url: `https://api.sinric.pro/api/v1/devices/${device}`,
